@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14161c">
+  <title>Drink Tracker</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Drink Tracker</h1>
+      <p class="sub" id="nightLabel">Tonight</p>
+    </div>
+    <button class="icon-btn" id="settingsBtn" aria-label="Settings">&#9881;</button>
+  </header>
+
+  <main>
+    <section class="stats">
+      <div class="stat"><span class="stat-num" id="totalStd">0.0</span><span class="stat-lbl">standard drinks</span></div>
+      <div class="stat"><span class="stat-num" id="bacNow">0.000</span><span class="stat-lbl">est. BAC now</span></div>
+      <div class="stat"><span class="stat-num" id="zeroAt">&ndash;</span><span class="stat-lbl">est. back to zero</span></div>
+    </section>
+
+    <section class="card">
+      <h2>Add a drink</h2>
+      <div class="btn-row">
+        <label class="btn primary" for="photoInput">Photo of label</label>
+        <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
+        <button class="btn" id="cameraBtn" type="button">Live camera</button>
+        <button class="btn" id="manualBtn" type="button">Manual</button>
+      </div>
+
+      <div id="cameraBox" class="camera" hidden>
+        <video id="video" playsinline muted></video>
+        <div class="btn-row">
+          <button class="btn primary" id="snapBtn" type="button">Capture</button>
+          <button class="btn" id="cameraClose" type="button">Close</button>
+        </div>
+      </div>
+
+      <div id="ocrStatus" class="ocr-status" hidden>
+        <div class="progress"><div id="ocrBar"></div></div>
+        <span id="ocrMsg">Reading label...</span>
+      </div>
+
+      <h3>Quick presets</h3>
+      <div class="presets" id="presets"></div>
+    </section>
+
+    <section class="card" id="confirmCard" hidden>
+      <h2>Check the details</h2>
+      <p class="hint" id="confirmHint"></p>
+      <img id="preview" class="preview" alt="Captured label" hidden>
+      <form id="drinkForm" autocomplete="off">
+        <label>Name<input id="fName" type="text" placeholder="e.g. Pale ale"></label>
+        <div class="grid2">
+          <label>Volume (mL)<input id="fVol" type="number" inputmode="decimal" min="0" step="1"></label>
+          <label>ABV (%)<input id="fAbv" type="number" inputmode="decimal" min="0" max="100" step="0.1"></label>
+        </div>
+        <div class="grid2">
+          <label>Standard drinks<input id="fStd" type="number" inputmode="decimal" min="0" step="0.1" required></label>
+          <label>Time<input id="fTime" type="time" required></label>
+        </div>
+        <p class="hint" id="stdHint"></p>
+        <details id="ocrDetails" hidden><summary>Text read from label</summary><pre id="ocrText"></pre></details>
+        <div class="btn-row">
+          <button class="btn primary" type="submit">Add to tonight</button>
+          <button class="btn" type="button" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Estimated BAC</h2>
+      </div>
+      <canvas id="chart" height="200" aria-label="Estimated blood alcohol curve"></canvas>
+      <p class="hint" id="peakInfo"></p>
+      <p class="disclaimer"><strong>Estimate only.</strong> This uses the Widmark formula with average values. Real BAC varies a lot with food, health, medication, hydration and individual metabolism. <strong>Do not use this to decide whether you can drive</strong> or do anything else safety-critical. If you have been drinking, don't drive.</p>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Tonight's log</h2>
+        <button class="btn small" id="endNightBtn" type="button">End night</button>
+      </div>
+      <ul class="log" id="log"></ul>
+      <p class="empty" id="logEmpty">No drinks logged yet.</p>
+    </section>
+
+    <section class="card">
+      <h2>History</h2>
+      <ul class="history" id="history"></ul>
+      <p class="empty" id="historyEmpty">Past nights will show here.</p>
+    </section>
+  </main>
+
+  <dialog id="settingsDlg">
+    <form method="dialog" id="settingsForm">
+      <h2>Settings</h2>
+      <p class="hint">Used only for the BAC estimate. Stored on this device.</p>
+      <label>Body weight (kg)<input id="sWeight" type="number" inputmode="decimal" min="30" max="300" step="1" required></label>
+      <label>Sex (for body-water ratio)
+        <select id="sSex"><option value="male">Male (r = 0.68)</option><option value="female">Female (r = 0.55)</option></select>
+      </label>
+      <div class="btn-row">
+        <button class="btn primary" value="save">Save</button>
+        <button class="btn" value="cancel" formnovalidate>Cancel</button>
+      </div>
+      <hr>
+      <button class="btn danger small" type="button" id="clearAllBtn">Delete all data</button>
+    </form>
+  </dialog>
+
+  <canvas id="work" hidden></canvas>
+  <script src="parse.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
