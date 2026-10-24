@@ -1,4 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00b894"/><stop offset="1" stop-color="#0b3d3a"/></linearGradient></defs>
-<rect width="100" height="100" rx="22" fill="url(#lg)"/><path d="M34 22h32l-4 52a6 6 0 0 1-6 6H44a6 6 0 0 1-6-6z" fill="#fff"/>
-<path d="M37 44h26l-2.6 30a4 4 0 0 1-4 4H43.6a4 4 0 0 1-4-4z" fill="#fdcb6e"/>
-<circle cx="46" cy="56" r="2.5" fill="#fff"/><circle cx="54" cy="64" r="2" fill="#fff"/><circle cx="50" cy="50" r="1.6" fill="#fff"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6C343"/><stop offset="1" stop-color="#6E4A00"/></linearGradient></defs>
+<rect width="100" height="100" rx="22" fill="url(#g)"/>
+<path d="M30 20h40l-5 56a7 7 0 0 1-7 6H42a7 7 0 0 1-7-6z" fill="#FFFFFF"/>
+<path d="M33.5 42h33l-3.3 34a4 4 0 0 1-4 3.6H40.8a4 4 0 0 1-4-3.6z" fill="#FFC93C"/>
+<path d="M33 42c6-5 11 3 17-1s11 3 17-1" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round"/>
+<circle cx="45" cy="58" r="2.6" fill="#FFF3C4"/><circle cx="55" cy="66" r="2.2" fill="#FFF3C4"/><circle cx="51" cy="52" r="1.6" fill="#FFF3C4"/>
+</svg>

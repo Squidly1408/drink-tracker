@@ -3,38 +3,95 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#14161c">
+  <meta name="theme-color" content="#0f0d0a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#faf6ee" media="(prefers-color-scheme: light)">
   <title>Drink Tracker</title>
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    try { var t = localStorage.getItem('drinkTracker.theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="top">
-    <div>
-      <h1>Drink Tracker</h1>
-      <p class="sub" id="nightLabel">Tonight</p>
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M6 4h10l-1 15a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z" fill="currentColor" opacity=".25"/><path d="M6.6 10h8.8l-.6 9a2 2 0 0 1-2 2H9.2a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M16 8h1.5A2.5 2.5 0 0 1 20 10.5v2A2.5 2.5 0 0 1 17.5 15H15.4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      </span>
+      <div>
+        <h1>Drink Tracker</h1>
+        <p class="sub" id="nightLabel">Tonight</p>
+      </div>
     </div>
-    <button class="icon-btn" id="settingsBtn" aria-label="Settings">&#9881;</button>
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Theme: auto" title="Theme: auto">
+        <svg class="i-auto" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+        <svg class="i-light" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg>
+        <svg class="i-dark" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg>
+      </button>
+      <button class="icon-btn" id="settingsBtn" type="button" aria-label="Settings" title="Settings">
+        <svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="10" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+    </div>
   </header>
 
   <main>
-    <section class="stats">
-      <div class="stat"><span class="stat-num" id="totalStd">0.0</span><span class="stat-lbl">standard drinks</span></div>
-      <div class="stat"><span class="stat-num" id="bacNow">0.000</span><span class="stat-lbl">est. BAC now</span></div>
-      <div class="stat"><span class="stat-num" id="zeroAt">&ndash;</span><span class="stat-lbl">est. back to zero</span></div>
+    <section class="hero" aria-label="Tonight's summary">
+      <div class="ring-wrap">
+        <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#FFD873"/>
+              <stop offset=".55" stop-color="#F6C343"/>
+              <stop offset="1" stop-color="#E8902A"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-track" cx="100" cy="100" r="84"/>
+          <circle class="ring-fill" id="ringFill" cx="100" cy="100" r="84" pathLength="100"/>
+          <circle class="ring-tick" id="ringTick" cx="100" cy="16" r="4"/>
+        </svg>
+        <div class="ring-center">
+          <span class="ring-num" id="totalStd">0.0</span>
+          <span class="ring-lbl">standard drinks</span>
+          <span class="ring-note" id="ringNote">Guideline: max 4 a day</span>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 3 5-7 4 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="stat-num" id="bacNow">0.000</span><span class="stat-lbl">est. BAC now</span>
+        </div>
+        <div class="stat">
+          <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <span class="stat-num" id="zeroAt">&ndash;</span><span class="stat-lbl">est. back to zero</span>
+        </div>
+      </div>
     </section>
 
     <section class="card">
       <h2>Add a drink</h2>
-      <div class="btn-row">
-        <label class="btn primary" for="photoInput">Photo of label</label>
-        <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
-        <button class="btn" id="cameraBtn" type="button">Live camera</button>
-        <button class="btn" id="manualBtn" type="button">Manual</button>
+      <div class="add-grid">
+        <label class="btn primary big" for="photoInput" id="photoBtn" tabindex="0" role="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.4-2h5l1.4 2h1.6A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12.5" r="3.4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span><b>Photo of label</b><small>Snap or pick an image</small></span>
+        </label>
+        <input id="photoInput" class="visually-hidden" type="file" accept="image/*" capture="environment" tabindex="-1">
+        <button class="btn" id="cameraBtn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 10.5l5-3v9l-5-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          Live camera
+        </button>
+        <button class="btn" id="manualBtn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13.5 6.5l4 4" stroke="currentColor" stroke-width="2"/></svg>
+          Manual
+        </button>
       </div>
 
       <div id="cameraBox" class="camera" hidden>
-        <video id="video" playsinline muted></video>
+        <div class="video-frame"><video id="video" playsinline muted></video></div>
         <div class="btn-row">
           <button class="btn primary" id="snapBtn" type="button">Capture</button>
           <button class="btn" id="cameraClose" type="button">Close</button>
@@ -50,7 +107,7 @@
       <div class="presets" id="presets"></div>
     </section>
 
-    <section class="card" id="confirmCard" hidden>
+    <section class="card confirm" id="confirmCard" hidden>
       <h2>Check the details</h2>
       <p class="hint" id="confirmHint"></p>
       <img id="preview" class="preview" alt="Captured label" hidden>
@@ -76,6 +133,7 @@
     <section class="card">
       <div class="card-head">
         <h2>Estimated BAC</h2>
+        <span class="pill">g/100mL</span>
       </div>
       <canvas id="chart" height="200" aria-label="Estimated blood alcohol curve"></canvas>
       <p class="hint" id="peakInfo"></p>

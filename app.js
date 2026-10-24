@@ -6,19 +6,32 @@
 
   // Typical Australian serves. Beer ABV defaults to full-strength lager (~4.8%).
   var PRESETS = [
-    { name: 'Pot / middy', vol: 285, abv: 4.8 },
-    { name: 'Schooner', vol: 425, abv: 4.8 },
-    { name: 'Pint', vol: 570, abv: 4.8 },
-    { name: 'Can / stubby', vol: 375, abv: 4.8 },
-    { name: 'Mid schooner', vol: 425, abv: 3.5 },
-    { name: 'Wine glass', vol: 150, abv: 13 },
-    { name: 'Large wine', vol: 250, abv: 13 },
-    { name: 'Sparkling', vol: 150, abv: 11.5 },
-    { name: 'Shot / nip', vol: 30, abv: 40 },
-    { name: 'Double spirit', vol: 60, abv: 40 },
-    { name: 'RTD can', vol: 375, abv: 5 },
-    { name: 'Cider', vol: 375, abv: 5 }
+    { name: 'Pot / middy', vol: 285, abv: 4.8, icon: 'pot' },
+    { name: 'Schooner', vol: 425, abv: 4.8, icon: 'schooner' },
+    { name: 'Pint', vol: 570, abv: 4.8, icon: 'pint' },
+    { name: 'Can / stubby', vol: 375, abv: 4.8, icon: 'can' },
+    { name: 'Mid schooner', vol: 425, abv: 3.5, icon: 'schooner' },
+    { name: 'Wine glass', vol: 150, abv: 13, icon: 'wine' },
+    { name: 'Large wine', vol: 250, abv: 13, icon: 'wine' },
+    { name: 'Sparkling', vol: 150, abv: 11.5, icon: 'flute' },
+    { name: 'Shot / nip', vol: 30, abv: 40, icon: 'shot' },
+    { name: 'Double spirit', vol: 60, abv: 40, icon: 'tumbler' },
+    { name: 'RTD can', vol: 375, abv: 5, icon: 'can' },
+    { name: 'Cider', vol: 375, abv: 5, icon: 'cider' }
   ];
+
+  // Inline SVG icons for the preset tiles (24x24, currentColor).
+  var ICONS = {
+    pot: '<path d="M7 6h10l-1.2 13a2 2 0 0 1-2 1.8h-3.6a2 2 0 0 1-2-1.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.5 10h9l-.8 9a1 1 0 0 1-1 .9H9.3a1 1 0 0 1-1-.9z" fill="currentColor"/><path d="M7 6.5c1-1.6 3-2 5-1.2 2-.8 4-.4 5 1.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+    schooner: '<path d="M6 4.5h12l-1.6 15.2a1.5 1.5 0 0 1-1.5 1.3H9.1a1.5 1.5 0 0 1-1.5-1.3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6.7 9h10.6l-1.2 10.6a.8.8 0 0 1-.8.7H8.7a.8.8 0 0 1-.8-.7z" fill="currentColor"/>',
+    pint: '<path d="M6 3.5h12l-.8 4.5.8 2-1.4 9.7a1.5 1.5 0 0 1-1.5 1.3H8.9a1.5 1.5 0 0 1-1.5-1.3L6 10l.8-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.4 10.5h9.2l-1.2 8.8a.8.8 0 0 1-.8.7H9.4a.8.8 0 0 1-.8-.7z" fill="currentColor"/>',
+    can: '<rect x="7" y="4" width="10" height="17" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 4.5l1-1.5h5l1 1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><rect x="9" y="9" width="6" height="7" rx="1" fill="currentColor"/>',
+    wine: '<path d="M7 3h10c.4 4.8-1.4 8.5-5 8.5S6.6 7.8 7 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.4 6.5h9.2c-.4 2.7-2 4.3-4.6 4.3s-4.2-1.6-4.6-4.3z" fill="currentColor"/><path d="M12 11.5V20M8 21h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+    flute: '<path d="M9 2.5h6l-.6 9a2.4 2.4 0 0 1-4.8 0z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.4 6.5h5.2l-.4 5a2.2 2.2 0 0 1-4.4 0z" fill="currentColor"/><path d="M12 14v6.5M8.5 21h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="17.5" cy="4" r="1" fill="currentColor"/><circle cx="18.5" cy="7.5" r=".8" fill="currentColor"/>',
+    shot: '<path d="M7 8h10l-1.3 11.2a2 2 0 0 1-2 1.8h-3.4a2 2 0 0 1-2-1.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.7 13h8.6l-.8 6a1 1 0 0 1-1 .9h-5a1 1 0 0 1-1-.9z" fill="currentColor"/>',
+    tumbler: '<path d="M5 6h14l-1.5 13a2 2 0 0 1-2 1.8h-7a2 2 0 0 1-2-1.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M5.8 12h12.4l-.9 7.2a1 1 0 0 1-1 .8H7.7a1 1 0 0 1-1-.8z" fill="currentColor"/><rect x="9" y="8.5" width="4" height="4" rx="1" transform="rotate(-12 11 10.5)" fill="none" stroke="currentColor" stroke-width="1.5"/>',
+    cider: '<path d="M12 7.5c-2.5-1.6-6.5-.6-6.5 4.2 0 4 2.6 8.3 5 8.3.7 0 1-.4 1.5-.4s.8.4 1.5.4c2.4 0 5-4.3 5-8.3 0-4.8-4-5.8-6.5-4.2z" fill="currentColor"/><path d="M12 7.5c0-2 .8-3.4 2-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M13 5.2c1.6-1.4 3.6-1.2 4.5-.6-.8 1.4-2.6 2-4.5.6z" fill="currentColor" opacity=".6"/>'
+  };
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -57,8 +70,9 @@
   PRESETS.forEach(function (p) {
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'preset';
-    b.innerHTML = '<b>' + esc(p.name) + '</b><small>' + p.vol + ' mL &middot; ' + p.abv + '% &middot; ' +
-      round(P.standardsFrom(p.vol, p.abv), 1) + ' std</small>';
+    b.innerHTML = '<span class="p-ico" aria-hidden="true"><svg viewBox="0 0 24 24">' + (ICONS[p.icon] || ICONS.schooner) + '</svg></span>' +
+      '<b>' + esc(p.name) + '</b><small>' + p.vol + ' mL &middot; ' + p.abv + '%</small>' +
+      '<span class="p-std">' + round(P.standardsFrom(p.vol, p.abv), 1) + ' std</span>';
     b.addEventListener('click', function () {
       openConfirm({ name: p.name, volumeMl: p.vol, abv: p.abv }, 'Preset: adjust ABV or size if yours differs.');
     });
@@ -284,6 +298,10 @@
   }
 
   // ---------- BAC chart ----------
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+  }
   function renderBac() {
     var drinks = state.current.drinks, now = Date.now(), s = state.settings;
     var opts = { weightKg: s.weightKg, sex: s.sex };
@@ -293,63 +311,155 @@
     var ctx = canvas.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     var css = getComputedStyle(document.documentElement);
     var cGrid = css.getPropertyValue('--grid').trim(), cMuted = css.getPropertyValue('--muted').trim(), cLine = css.getPropertyValue('--chart').trim();
-    ctx.font = '11px system-ui, sans-serif';
+    var cCard = css.getPropertyValue('--card').trim(), cText = css.getPropertyValue('--text').trim();
+    var FONT = '"Outfit", system-ui, sans-serif';
+    ctx.font = '500 11px ' + FONT;
 
     if (!drinks.length) {
       $('bacNow').textContent = '0.000'; $('zeroAt').textContent = '–'; $('peakInfo').textContent = '';
-      ctx.fillStyle = cMuted; ctx.textAlign = 'center';
-      ctx.fillText('Log a drink to see the estimated curve', W / 2, H / 2); return;
+      // faint placeholder curve
+      ctx.strokeStyle = cGrid; ctx.lineWidth = 2; ctx.setLineDash([6, 6]);
+      ctx.beginPath(); ctx.moveTo(16, H - 30);
+      ctx.bezierCurveTo(W * 0.3, H - 30, W * 0.32, 40, W * 0.45, 40); ctx.bezierCurveTo(W * 0.6, 40, W * 0.75, H - 30, W - 16, H - 30);
+      ctx.stroke(); ctx.setLineDash([]);
+      ctx.font = '500 13px ' + FONT; ctx.textAlign = 'center';
+      var msg = 'Log a drink to see the estimated curve', mw = ctx.measureText(msg).width + 24;
+      roundRect(ctx, W / 2 - mw / 2, H / 2 - 4, mw, 30, 15); ctx.fillStyle = cCard; ctx.fill(); ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = cMuted; ctx.fillText(msg, W / 2, H / 2 + 15); return;
     }
     var start = drinks[0].time - 15 * 60000;
     var zero = P.timeToZero(drinks, opts, now);
     var end = Math.max(now, zero || 0, drinks[drinks.length - 1].time + 60 * 60000) + 30 * 60000;
     var sim = P.simulateBac(drinks, opts, start, end, 2);
     var nowPt = sim.points.reduce(function (best, p) { return Math.abs(p.t - now) < Math.abs(best.t - now) ? p : best; }, sim.points[0]);
-    $('bacNow').textContent = (now < start ? 0 : nowPt.bac).toFixed(3);
+    var nowBac = now < start ? 0 : nowPt.bac;
+    $('bacNow').textContent = nowBac.toFixed(3);
     $('zeroAt').textContent = zero ? fmtTime(zero) : 'now';
     $('peakInfo').textContent = 'Est. peak ' + sim.peak.bac.toFixed(3) + ' g/100mL around ' + fmtTime(sim.peak.t) +
       '. Assumes ' + s.weightKg + ' kg, ' + s.sex + ', ~45 min absorption, elimination 0.015/h.';
 
-    var pad = { l: 40, r: 10, t: 10, b: 24 }, pw = W - pad.l - pad.r, ph = H - pad.t - pad.b;
+    var pad = { l: 38, r: 12, t: 16, b: 26 }, pw = W - pad.l - pad.r, ph = H - pad.t - pad.b;
     var yMax = Math.max(0.04, Math.ceil(sim.peak.bac * 1.2 * 100) / 100);
     var x = function (t) { return pad.l + (t - start) / (end - start) * pw; };
     var y = function (b) { return pad.t + ph - b / yMax * ph; };
 
+    // grid
     ctx.strokeStyle = cGrid; ctx.fillStyle = cMuted; ctx.lineWidth = 1; ctx.textAlign = 'right';
     var yStep = yMax <= 0.06 ? 0.01 : yMax <= 0.15 ? 0.02 : 0.05;
     for (var b = 0; b <= yMax + 1e-9; b += yStep) {
-      ctx.beginPath(); ctx.moveTo(pad.l, y(b)); ctx.lineTo(W - pad.r, y(b)); ctx.stroke();
-      ctx.fillText(b.toFixed(2), pad.l - 6, y(b) + 4);
+      var gy = Math.round(y(b)) + 0.5;
+      ctx.setLineDash(b === 0 ? [] : [2, 4]);
+      ctx.beginPath(); ctx.moveTo(pad.l, gy); ctx.lineTo(W - pad.r, gy); ctx.stroke();
+      ctx.fillText(b.toFixed(2), pad.l - 8, y(b) + 4);
     }
+    ctx.setLineDash([]);
     ctx.textAlign = 'center';
     var hourMs = 3600000, hrStep = (end - start) > 8 * hourMs ? 2 : 1;
     var firstHr = new Date(start); firstHr.setMinutes(0, 0, 0);
     for (var t = firstHr.getTime() + hourMs; t < end; t += hourMs * hrStep) {
-      ctx.fillText(new Date(t).toLocaleTimeString('en-AU', { hour: 'numeric' }), x(t), H - 6);
+      ctx.fillText(new Date(t).toLocaleTimeString('en-AU', { hour: 'numeric' }), x(t), H - 7);
     }
-    // area + line
+    // gradient area
+    var grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + ph);
+    grad.addColorStop(0, cLine + '66'); grad.addColorStop(1, cLine + '00');
     ctx.beginPath(); ctx.moveTo(x(start), y(0));
     sim.points.forEach(function (p) { ctx.lineTo(x(p.t), y(p.bac)); });
     ctx.lineTo(x(end), y(0)); ctx.closePath();
-    ctx.globalAlpha = 0.15; ctx.fillStyle = cLine; ctx.fill(); ctx.globalAlpha = 1;
-    ctx.beginPath();
-    sim.points.forEach(function (p, i) { i ? ctx.lineTo(x(p.t), y(p.bac)) : ctx.moveTo(x(p.t), y(p.bac)); });
-    ctx.strokeStyle = cLine; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = grad; ctx.fill();
+    // line: solid up to now, dashed projection after
+    function strokeCurve(from, to) {
+      ctx.beginPath(); var started = false;
+      sim.points.forEach(function (p) {
+        if (p.t < from || p.t > to) return;
+        if (!started) { ctx.moveTo(x(p.t), y(p.bac)); started = true; } else ctx.lineTo(x(p.t), y(p.bac));
+      });
+      ctx.stroke();
+    }
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.strokeStyle = cLine; ctx.lineWidth = 2.5;
+    ctx.shadowColor = cLine + '88'; ctx.shadowBlur = 8;
+    strokeCurve(start, Math.max(start, now));
+    ctx.shadowBlur = 0; ctx.globalAlpha = 0.7; ctx.setLineDash([5, 5]);
+    strokeCurve(Math.max(start, now - 120000), end);
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
     // drink markers
-    ctx.fillStyle = cLine;
-    drinks.forEach(function (d) { ctx.beginPath(); ctx.arc(x(d.time), y(0), 3, 0, Math.PI * 2); ctx.fill(); });
-    // now line
-    ctx.strokeStyle = cMuted; ctx.setLineDash([4, 4]); ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(x(now), pad.t); ctx.lineTo(x(now), pad.t + ph); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = cMuted; ctx.fillText('now', Math.min(x(now), W - 20), pad.t + 10);
+    drinks.forEach(function (d) {
+      ctx.beginPath(); ctx.arc(x(d.time), y(0), 4, 0, Math.PI * 2);
+      ctx.fillStyle = cCard; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = cLine; ctx.stroke();
+    });
+    // peak marker
+    if (sim.peak.bac > 0) {
+      ctx.beginPath(); ctx.arc(x(sim.peak.t), y(sim.peak.bac), 3.5, 0, Math.PI * 2); ctx.fillStyle = cLine; ctx.fill();
+    }
+    // now line + dot + label
+    if (now >= start && now <= end) {
+      var nx = x(now);
+      ctx.strokeStyle = cMuted; ctx.globalAlpha = 0.6; ctx.setLineDash([3, 4]); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(nx, pad.t); ctx.lineTo(nx, pad.t + ph); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+      ctx.beginPath(); ctx.arc(nx, y(nowBac), 9, 0, Math.PI * 2); ctx.fillStyle = cLine + '33'; ctx.fill();
+      ctx.beginPath(); ctx.arc(nx, y(nowBac), 5, 0, Math.PI * 2); ctx.fillStyle = cLine; ctx.fill();
+      ctx.lineWidth = 2; ctx.strokeStyle = cCard; ctx.stroke();
+      ctx.font = '600 11px ' + FONT;
+      var label = 'now', lw = ctx.measureText(label).width + 14, lx = Math.min(Math.max(nx - lw / 2, pad.l), W - pad.r - lw);
+      roundRect(ctx, lx, pad.t - 14, lw, 18, 9); ctx.fillStyle = cText; ctx.fill();
+      ctx.fillStyle = cCard; ctx.textAlign = 'center'; ctx.fillText(label, lx + lw / 2, pad.t - 1);
+    }
+  }
+
+  // ---------- hero ring ----------
+  var GUIDE = 4, RING_MAX = 8, lastTotal = null;
+  function renderRing(total) {
+    var frac = Math.min(total / RING_MAX, 1), over = total > GUIDE;
+    var fill = $('ringFill');
+    fill.style.strokeDasharray = (frac > 0 ? Math.max(frac * 100, 1.5) : 0) + ' 100';
+    fill.classList.toggle('over', over); fill.classList.toggle('empty', frac <= 0);
+    // marker at the daily-guideline position on the ring
+    var ang = (GUIDE / RING_MAX) * Math.PI * 2;
+    $('ringTick').setAttribute('cx', (100 + 84 * Math.cos(ang)).toFixed(2));
+    $('ringTick').setAttribute('cy', (100 + 84 * Math.sin(ang)).toFixed(2));
+    var note = $('ringNote');
+    note.classList.toggle('over', over);
+    note.textContent = over ? 'Over the 4-a-day guideline'
+      : total > 0 ? round(GUIDE - total, 1) + ' under the 4-a-day guideline' : 'Guideline: max 4 a day';
+    if (lastTotal !== null && total !== lastTotal) {
+      var n = $('totalStd'); n.classList.remove('pop'); void n.offsetWidth; n.classList.add('pop');
+    }
+    lastTotal = total;
   }
 
   function render() {
     var d = state.current.drinks;
-    $('totalStd').textContent = round(totalStd(d), 1).toFixed(1);
+    var total = round(totalStd(d), 1);
+    $('totalStd').textContent = total.toFixed(1);
+    renderRing(total);
     $('nightLabel').textContent = d.length ? 'Night started ' + fmtDate(d[0].time) + ', ' + fmtTime(d[0].time) : 'No drinks yet tonight';
     renderLog(); renderHistory(); renderBac();
   }
+
+  // ---------- theme ----------
+  var THEME_KEY = 'drinkTracker.theme', MODES = ['auto', 'light', 'dark'];
+  function getTheme() {
+    try { var t = localStorage.getItem(THEME_KEY); return MODES.indexOf(t) >= 0 ? t : 'auto'; } catch (e) { return 'auto'; }
+  }
+  function applyTheme(mode) {
+    if (mode === 'auto') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = mode;
+    var btn = $('themeBtn'), label = 'Theme: ' + mode;
+    btn.dataset.mode = mode; btn.setAttribute('aria-label', label); btn.title = label;
+    renderBac();
+  }
+  $('themeBtn').addEventListener('click', function () {
+    var next = MODES[(MODES.indexOf(getTheme()) + 1) % MODES.length];
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* storage unavailable */ }
+    applyTheme(next);
+  });
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', renderBac); else if (mq.addListener) mq.addListener(renderBac);
+  }
+
+  // Keyboard support for the photo button (a <label> for the visually hidden file input).
+  $('photoBtn').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('photoInput').click(); }
+  });
 
   // ---------- settings ----------
   $('settingsBtn').addEventListener('click', function () {
@@ -369,6 +479,8 @@
   });
 
   window.addEventListener('resize', renderBac);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderBac);
+  applyTheme(getTheme());
   setInterval(render, 60000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) render(); });
   render();
